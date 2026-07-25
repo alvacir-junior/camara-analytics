@@ -1,0 +1,17 @@
+# Logs
+logs
+*.log
+
+# Evidence e Node
+node_modules
+.evidence
+dist
+.DS_Store
+
+# Python
+__pycache__
+*.pyc
+venv
+
+# Não ignorar o banco de dados (porque o pipeline precisa dele)
+# data/camara.duckdb

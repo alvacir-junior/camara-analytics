@@ -1,48 +1,92 @@
-# Evidence Template Project
+# 🏛️ Câmara Analytics
 
-## Using Codespaces
+> **Projeto de Estudo em Engenharia e Análise de Dados**  
+> Aplicação prática de conceitos de ingestão de dados, modelagem dimensional e Business Intelligence (BI) utilizando dados abertos da Câmara dos Deputados.
 
-If you are using this template in Codespaces, click the `Start Evidence` button in the bottom status bar. This will install dependencies and open a preview of your project in your browser - you should get a popup prompting you to open in browser.
+---
 
-Or you can use the following commands to get started:
+## 🎯 Sobre o Projeto
 
-```bash
-npm install
-npm run sources
-npm run dev -- --host 0.0.0.0
+O **Câmara Analytics** é um projeto com foco acadêmico e de desenvolvimento de portfólio. O objetivo principal é construir um pipeline de dados *End-to-End* — desde a extração de dados brutos via API REST até a modelagem colunar e publicação de dashboards analíticos.
+
+Como estudo de caso, o projeto analisa os gastos da **Cota para o Exercício da Atividade Parlamentar (CEAP)** e a produtividade dos deputados federais brasileiros durante a **57ª Legislatura**.
+
+---
+
+## 🏗️ Arquitetura e Fluxo de Dados
+
+O projeto adota os princípios da **Arquitetura Medalhão** e do **Modern Data Stack**:
+
+1. **Ingestão (Camada Bronze):** Extração automatizada dos dados brutos da API dos Dados Abertos via Python.
+2. **Tratamento & Limpeza (Camada Silver):** Padronização, deduplicação e limpeza dos dados utilizando **DuckDB**.
+3. **Modelagem Dimensional (Camada Gold):** Criação das tabelas Fato e Dimensão para consumo analítico.
+4. **Visualização:** Construção de dashboards interativos com **Evidence.dev** (Markdown + SQL).
+5. **Automação:** Orquestração do pipeline de ETL e deploy contínuo via **GitHub Actions**.
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+* **Linguagem & Ingestão:** Python (`requests`, `pandas`)
+* **Banco de Dados Analítico:** DuckDB
+* **Visualização & BI:** Evidence.dev (BI-as-Code)
+* **Automação & CI/CD:** GitHub Actions
+
+---
+
+## 📁 Estrutura do Repositório
+
+```text
+├── .github/
+│   └── workflows/      # Automações de ETL e Deploy
+├── data/               # Banco de dados DuckDB
+├── pages/              # Dashboards e relatórios (Evidence)
+├── sources/            # Conexão do Evidence com o DuckDB
+├── etl.py              # Script principal do pipeline de dados
+├── package.json        # Configurações do Evidence (Node.js)
+└── requirements.txt    # Dependências do Python
 ```
 
-See [the CLI docs](https://docs.evidence.dev/cli/) for more command information.
+---
 
-**Note:** Codespaces is much faster on the Desktop app. After the Codespace has booted, select the hamburger menu → Open in VS Code Desktop.
+## 🚀 Como Executar Localmente
 
-## Get Started from VS Code
+### Pré-requisitos
+* Python 3.10 ou superior
+* Node.js 18 ou superior
 
-The easiest way to get started is using the [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=Evidence.evidence-vscode):
+### Passo a Passo
 
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/alvacir-junior/camara-analytics.git
+   cd camara-analytics
+   ```
 
+2. **Instale as dependências do Python:**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-1. Install the extension from the VS Code Marketplace
-2. Open the Command Palette (Ctrl/Cmd + Shift + P) and enter `Evidence: New Evidence Project`
-3. Click `Start Evidence` in the bottom status bar
+3. **Execute o pipeline ETL:**
+   ```bash
+   python etl.py
+   ```
 
-## Get Started using the CLI
+4. **Instale as dependências do Evidence e inicie o projeto:**
+   ```bash
+   npm install
+   npm run dev
+   ```
 
-```bash
-npx degit evidence-dev/template my-project
-cd my-project 
-npm install 
-npm run sources
-npm run dev 
-```
+---
 
-Check out the docs for [alternative install methods](https://docs.evidence.dev/getting-started/install-evidence) including Docker, Github Codespaces, and alongside dbt.
+## 📌 Objetivos de Aprendizado
 
+* Consumo resiliente de APIs REST públicas.
+* Aplicação da Arquitetura Medalhão em bancos analíticos colunares (DuckDB).
+* Modelagem Dimensional (Star Schema) voltada para Business Intelligence.
+* Práticas de **BI-as-Code** (gerenciamento de BI via código e versionamento).
+* Automação de rotinas de dados utilizando CI/CD com GitHub Actions.
 
-
-## Learning More
-
-- [Docs](https://docs.evidence.dev/)
-- [Github](https://github.com/evidence-dev/evidence)
-- [Slack Community](https://slack.evidence.dev/)
-- [Evidence Home Page](https://www.evidence.dev)
+---

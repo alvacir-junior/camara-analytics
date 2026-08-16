@@ -1,0 +1,20 @@
+SELECT
+    ano,
+    mes,
+    make_date(ano, mes, 1) AS competencia,
+    id_legislatura,
+    id_deputado,
+    deputado,
+    em_exercicio,
+    data_referencia_exercicio,
+    coalesce(sigla_partido, 'N/D') AS sigla_partido,
+    coalesce(sigla_uf, 'N/D') AS sigla_uf,
+    coalesce(tipo_despesa, 'NÃO INFORMADO') AS tipo_despesa,
+    coalesce(categoria_analitica, 'OUTROS') AS categoria_analitica,
+    coalesce(classificacao_uso, 'NÃO CLASSIFICADA') AS classificacao_uso,
+    quantidade_despesas,
+    valor_documento,
+    valor_glosa,
+    valor_liquido,
+    valor_medio
+FROM dm.despesas_mensais;

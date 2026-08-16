@@ -1,92 +1,59 @@
-# 🏛️ Câmara Analytics
+# Câmara Analytics — Evidence
 
-> **Projeto de Estudo em Engenharia e Análise de Dados**  
-> Aplicação prática de conceitos de ingestão de dados, modelagem dimensional e Business Intelligence (BI) utilizando dados abertos da Câmara dos Deputados.
+Camada de visualização para o projeto ETL Câmara dos Deputados.
 
----
+## O que já está preparado
 
-## 🎯 Sobre o Projeto
+- Visão Geral com KPIs, evolução mensal e destaques automáticos;
+- página de Despesas com filtros por legislatura, ano, partido e UF;
+- página de Votações com participação, composição dos votos e tipos de proposição;
+- página de Deputados com ranking de gastos, atividade e busca;
+- página Sobre os dados com regras de interpretação;
+- conexão DuckDB em `sources/camara_db/connection.yaml`.
 
-O **Câmara Analytics** é um projeto com foco acadêmico e de desenvolvimento de portfólio. O objetivo principal é construir um pipeline de dados *End-to-End* — desde a extração de dados brutos via API REST até a modelagem colunar e publicação de dashboards analíticos.
+## 1. Adicionar o banco gerado pelo ETL
 
-Como estudo de caso, o projeto analisa os gastos da **Cota para o Exercício da Atividade Parlamentar (CEAP)** e a produtividade dos deputados federais brasileiros durante a **57ª Legislatura**.
-
----
-
-## 🏗️ Arquitetura e Fluxo de Dados
-
-O projeto adota os princípios da **Arquitetura Medalhão** e do **Modern Data Stack**:
-
-1. **Ingestão (Camada Bronze):** Extração automatizada dos dados brutos da API dos Dados Abertos via Python.
-2. **Tratamento & Limpeza (Camada Silver):** Padronização, deduplicação e limpeza dos dados utilizando **DuckDB**.
-3. **Modelagem Dimensional (Camada Gold):** Criação das tabelas Fato e Dimensão para consumo analítico.
-4. **Visualização:** Construção de dashboards interativos com **Evidence.dev** (Markdown + SQL).
-5. **Automação:** Orquestração do pipeline de ETL e deploy contínuo via **GitHub Actions**.
-
----
-
-## 🛠️ Tecnologias Utilizadas
-
-* **Linguagem & Ingestão:** Python (`requests`, `pandas`)
-* **Banco de Dados Analítico:** DuckDB
-* **Visualização & BI:** Evidence.dev (BI-as-Code)
-* **Automação & CI/CD:** GitHub Actions
-
----
-
-## 📁 Estrutura do Repositório
+Copie o DuckDB produzido pelo ETL para:
 
 ```text
-├── .github/
-│   └── workflows/      # Automações de ETL e Deploy
-├── data/               # Banco de dados DuckDB
-├── pages/              # Dashboards e relatórios (Evidence)
-├── sources/            # Conexão do Evidence com o DuckDB
-├── etl.py              # Script principal do pipeline de dados
-├── package.json        # Configurações do Evidence (Node.js)
-└── requirements.txt    # Dependências do Python
+sources/camara_db/camara.duckdb
 ```
 
----
+O arquivo esperado é o mesmo configurado no ETL por `CAMARA_DB_PATH` (por padrão `data/output/camara.duckdb`).
 
-## 🚀 Como Executar Localmente
+## 2. Instalar dependências
 
-### Pré-requisitos
-* Python 3.10 ou superior
-* Node.js 18 ou superior
+```bash
+npm install
+```
 
-### Passo a Passo
+## 3. Atualizar as fontes do Evidence
 
-1. **Clone o repositório:**
-   ```bash
-   git clone https://github.com/alvacir-junior/camara-analytics.git
-   cd camara-analytics
-   ```
+```bash
+npm run sources
+```
 
-2. **Instale as dependências do Python:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+## 4. Executar localmente
 
-3. **Execute o pipeline ETL:**
-   ```bash
-   python etl.py
-   ```
+```bash
+npm run dev
+```
 
-4. **Instale as dependências do Evidence e inicie o projeto:**
-   ```bash
-   npm install
-   npm run dev
-   ```
+## Estrutura das consultas de origem
 
----
+```text
+sources/camara_db/
+├── connection.yaml
+├── atualizacao.sql
+├── deputados.sql
+├── despesas_mensais.sql
+├── legislaturas.sql
+├── votos.sql
+└── votos_proposicoes.sql
+```
 
-## 📌 Objetivos de Aprendizado
+A consulta `votos.sql` parte de `dw.fact_voto_deputado` para manter uma linha por voto parlamentar e não sofrer multiplicação pelo relacionamento votação × proposição.
 
-* Consumo resiliente de APIs REST públicas.
-* Aplicação da Arquitetura Medalhão em bancos analíticos colunares (DuckDB).
-* Modelagem Dimensional (Star Schema) voltada para Business Intelligence.
-* Práticas de **BI-as-Code** (gerenciamento de BI via código e versionamento).
-* Automação de rotinas de dados utilizando CI/CD com GitHub Actions.
+## Próximo refinamento recomendado
 
----
+Após inserir o DuckDB real, rode `npm run sources` e revise os resultados visuais. A partir dos volumes reais, vale ajustar limites, formatos, categorias e criar páginas detalhadas por deputado usando páginas parametrizadas.

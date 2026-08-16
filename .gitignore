@@ -1,10 +1,25 @@
+# Evidence / Svelte
 .evidence/template
+.evidence/meta
 .svelte-kit
 build
-node_modules
-.DS_Store
 static/data
-*.options.yaml
-.vscode/settings.json
+
+# Node
+node_modules
+
+# Configurações locais / credenciais
 .env
-.evidence/meta
+*.options.yaml
+
+# Editor / sistema operacional
+.vscode/settings.json
+.DS_Store
+
+# Banco local
+*.duckdb
+*.duckdb.wal
+
+# Logs
+*.log
+npm-debug.log*

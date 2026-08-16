@@ -1,0 +1,21 @@
+SELECT
+    sk_deputado,
+    id_deputado,
+    id_legislatura,
+    nome AS deputado,
+    url_foto,
+    email,
+    registro_orfao,
+    origem_registro,
+    em_exercicio,
+    data_referencia_exercicio,
+    origem_situacao_exercicio,
+    data_inicio_legislatura,
+    data_fim_legislatura,
+    quantidade_votos,
+    votos_sim,
+    votos_nao,
+    abstencoes,
+    quantidade_despesas,
+    total_gasto
+FROM dm.deputado_resumo;
